@@ -409,11 +409,11 @@ def getCircularDetails(obj):
     print('Not circular')
 
 def createRevolveHull(coordlist) :
-    points = sorted(coordlist, key = lambda x: x[1]) # sort by x-coord
+    points = sorted(coordlist, key = lambda x: x[2]) # sort by z-coord
     top = [points[0], points[1]]
     for p in points[2:]:
         top.append(p)
-        while len(top) > 2 and not _isConvex(*top[-3:]):
+        while len(top) > 2 and not _isConvex(*top[-3:],2, 1):
             del top[-2]
     #print(top)
     # close polygon
@@ -422,10 +422,11 @@ def createRevolveHull(coordlist) :
     revHull = poly.revolve(FreeCAD.Vector(0,0,0),FreeCAD.Vector(0,0,1),360)
     return revHull
 
-def _isConvex(p, q, r):
-    'return True if the vectors pq to qr is a right turn ie convex'
-    return q[1]*r[2] + p[1]*q[2] + r[1]*p[2] - \
-            (q[1]*p[2] + r[1]*q[2] + p[1]*r[2]) < 0
+def _isConvex(p, q, r, ind1, ind2):
+    'return True if the vectors pq to qr is a right turn ie convex. ind1 is sort axis. ind2 the other'
+    return q[ind1]*r[ind2] + p[ind1]*q[ind2] + r[ind1]*p[ind2] - \
+            (q[ind1]*p[ind2] + r[ind1]*q[ind2] + p[ind1]*r[ind2]) < 0
+
 
 def chkPerpendicular(obj) :
     m1 = obj1.Placement.Rotation.Matrix
