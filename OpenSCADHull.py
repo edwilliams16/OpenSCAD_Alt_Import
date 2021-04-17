@@ -419,6 +419,7 @@ def createRevolveHull(coordlist) :
     # close polygon
     top.append(top[0])
     poly = Part.makePolygon(top)
+
     revHull = poly.revolve(FreeCAD.Vector(0,0,0),FreeCAD.Vector(0,0,1),360)
     return revHull
 
@@ -488,6 +489,8 @@ def createHull(group) :
                  pointLst.append(FreeCAD.Vector(0,0,bx))
              print(pointLst)
              revHull = createRevolveHull(pointLst)
+             revHull.Placement.Rotation = obj1.Placement.Rotation  # rotate from z-axis to collinear axis
+             print(revHull.Placement.Rotation)
              return revHull
     #if chkConcentric(obj1,obj2) :
     #if obj1.Placement.Rotation == obj2.Placement.Rotation :
