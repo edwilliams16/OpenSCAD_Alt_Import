@@ -498,7 +498,7 @@ def createHull(group) :
                  pointLst.append(FreeCAD.Vector(0,0,bx))
              print(pointLst)
              revHull = createRevolveHull(pointLst)
-             revHull.Placement.Rotation = obj1.Placement.Rotation  # rotate from z-axis to collinear axis
+             revHull.Placement.Rotation = group[0].Placement.Rotation  # rotate from z-axis to collinear axis
              print(revHull.Placement.Rotation)
              return revHull
        if len(group) == 2 : 
